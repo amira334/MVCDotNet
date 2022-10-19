@@ -24,7 +24,7 @@ namespace dotnetmvcdatabase.Controllers
             return View(employees);
         }
  
-        // This is a new change
+        
         [HttpGet]
         public IActionResult Add()
         {
