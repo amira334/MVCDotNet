@@ -3,6 +3,7 @@ using ASPNETMVCCRUD.Models.Domain;
 using ASPNETMVCCRUD.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace dotnetmvcdatabase.Controllers
 {
@@ -22,8 +23,8 @@ namespace dotnetmvcdatabase.Controllers
             var employees = await mvcDemoDbContext.Employees.ToListAsync();
             return View(employees);
         }
-
-        
+ 
+        // This is a new change
         [HttpGet]
         public IActionResult Add()
         {
