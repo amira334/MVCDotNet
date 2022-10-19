@@ -4,6 +4,7 @@ using ASPNETMVCCRUD.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 
 namespace dotnetmvcdatabase.Controllers
 {
@@ -47,15 +48,36 @@ namespace dotnetmvcdatabase.Controllers
 
             await mvcDemoDbContext.Employees.AddAsync(employee);
             await mvcDemoDbContext.SaveChangesAsync();
-            return RedirectToAction("Add");
-
-
+            return RedirectToAction("Index");
         }
+
 
         [HttpGet]
-        public IActionResult View(Guid id)
+        public async Task<IActionResult> View(Guid id)
         {
-            return View(id);
+
+            var employee = await mvcDemoDbContext.Employees.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (employee != null)
+            {
+                var viewModel = new UpdateEmployeeViewModel()
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                    Email = employee.Email,
+                    Salary = employee.Salary,
+                    Department = employee.Department,
+                    DateOfBirth = employee.DateOfBirth
+
+                }; 
+
+                return View(viewModel);
+
+            }
+
+            return RedirectToAction("Index");
         }
+
+       
     }
 }
